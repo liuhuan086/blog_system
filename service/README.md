@@ -1,6 +1,25 @@
 # service
+## 创建数据库
+```sql
+create database react_blog;
+```
+## 创建三张表
+* article
+* type
+* blog_content
 
-
+article表的字段
+```
+title、type_id、article_content、introduce、add_time、view_count
+```
+type表的字段
+```
+title、type、introduce(可以为空)、content
+```
+blog_content表的字段
+```sql
+typeName、orderNum
+```
 
 ## QuickStart
 
