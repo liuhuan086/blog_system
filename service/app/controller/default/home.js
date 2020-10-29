@@ -4,14 +4,14 @@ const Controller = require('egg').Controller;
 
 class HomeController extends Controller {
     async index() {
-        const {ctx} = this;
-        ctx.body = 'hi, egg';
+
+        let result = await this.app.mysql.get("blog_content", {})
+        console.log(result)
+
+        this.ctx.body = result
+
     }
 
-    async list(){
-        const {ctx} = this;
-        ctx.body = '<h1>blog list</h1>'
-    }
 }
 
 module.exports = HomeController;
