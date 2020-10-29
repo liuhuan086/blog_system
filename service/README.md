@@ -12,11 +12,13 @@ article表的字段
 ```
 title、type_id、article_content、introduce、add_time、view_count
 ```
-type表的字段
+
+blog_content表的字段
 ```
 title、type、introduce(可以为空)、content
 ```
-blog_content表的字段
+
+type表的字段
 ```sql
 typeName、orderNum
 ```
