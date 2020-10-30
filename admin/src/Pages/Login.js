@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css'
 import {Card, Input, Icon, Button, Spin} from "antd";
 import '../static/css/Login.css'
 
 function Login() {
-    const [userName, setUserName] = useState('')
-    const [password, setPassword] = useState('')
+    const [setUserName] = useState('')
+    const [setPassword] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
     const checkLogin = () => {
@@ -30,7 +30,7 @@ function Login() {
                             setUserName(e.target.value)
                         }}
                     />
-                    
+
                     <br/><br/>
 
                     <Input.Password
