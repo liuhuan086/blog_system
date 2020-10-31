@@ -1,16 +1,57 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 // import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css'
-import {Card, Input, Icon, Button, Spin} from "antd";
+import {Card, Input, Icon, Button, Spin, message} from "antd";
 import '../static/css/Login.css'
+import servicePath from "../config/apiUrl";
+import axios from 'axios'
 
-function Login() {
-    const [setUserName] = useState('')
-    const [setPassword] = useState('')
+function Login(props) {
+    const [userName, setUserName] = useState('')
+    const [password, setPassword] = useState('')
     const [isLoading, setIsLoading] = useState(false)
+
+    useEffect(() => {
+    }, [])
 
     const checkLogin = () => {
         setIsLoading(true)
+
+        if (!userName) {
+            message.error("用户名不能为空")
+            setTimeout(() => {
+                setIsLoading(false)
+            }, 1000)
+            return false
+        } else if (!password) {
+            message.error('密码不能为空')
+            setTimeout(() => {
+                setIsLoading(false)
+            }, 1000)
+            return false
+        }
+        let dataProps = {
+            'userName': userName,
+            'password': password
+        }
+
+        axios({
+            method: 'post',
+            url: servicePath.checkLogin,
+            data: dataProps,
+            // 前端后端共享session
+            withCredentials: true
+        }).then(
+            res => {
+                setIsLoading(false)
+                if (res.data.data === '登陆成功') {
+                    localStorage.setItem('openId', res.data.openId)
+                    props.history.push('/index')
+                } else {
+                    message.error("用户名或密码错误")
+                }
+            }
+        )
         setTimeout(() => {
             setIsLoading(false)
         }, 1000)

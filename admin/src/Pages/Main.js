@@ -7,7 +7,7 @@ function Main() {
     return (
         <Router>
             {/*exact 精确匹配路由*/}
-            <Route path='/login/' exact component={Login}/>
+            <Route path='/' exact component={Login}/>
             <Route path='/index/' exact component={AdminIndex}/>
         </Router>
     )
