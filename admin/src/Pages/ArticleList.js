@@ -26,6 +26,25 @@ function ArticleList() {
         )
     }
 
+    const delArticle = (id) => {
+        confirm({
+            title: '确定删除？',
+            content: '删除之后，文章将无法恢复。',
+            onOk() {
+                axios(
+                    servicePath.delArticle+id, {withCredentials: true}
+                ).then(
+                    res => {
+                        message.success("删除成功")
+                        getList()
+                    }
+                )
+            },
+            onCancel() {
+            }
+        })
+    }
+
     return (
         <div>
             <List
@@ -74,7 +93,9 @@ function ArticleList() {
                             </Col>
                             <Col span={4}>
                                 <Button type="primary">修改</Button>&nbsp;
-                                <Button>删除 </Button>
+                                <Button onClick={() => {
+                                    delArticle(item.id)
+                                }}>删除</Button>
                             </Col>
                         </Row>
 
