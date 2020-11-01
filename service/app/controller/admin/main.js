@@ -42,6 +42,15 @@ class MainController extends Controller {
             insertId: insertId
         }
     }
+
+    async updateArticle() {
+        let tmpArticle = this.ctx.request.body
+        const res = await this.app.mysql.update('article', tmpArticle)
+        const updateSuccess = res.affectedRows === 1
+        this.ctx.body = {
+            isSuccess: updateSuccess
+        }
+    }
 }
 
 module.exports = MainController

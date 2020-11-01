@@ -120,6 +120,24 @@ function AddArticle(props) {
                     }
                 }
             )
+        } else {
+            // console.log('articleId:' + articleId)
+            dataProps.id = articleId
+            axios({
+                method: 'post',
+                url: servicePath.updateArticle,
+                header: {'Access-Control-Allow-Origin': '*'},
+                data: dataProps,
+                withCredentials: true
+            }).then(
+                res => {
+                    if (res.data.isSuccess) {
+                        message.success('文章保存成功')
+                    } else {
+                        message.error('保存失败');
+                    }
+                }
+            )
         }
     }
 

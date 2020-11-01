@@ -6,4 +6,5 @@ module.exports = app => {
     // 路由守卫，中间件卸载方法之前
     router.get('/admin/getTypeInfo', adminAuth, controller.admin.main.getTypeInfo)
     router.post('/admin/addArticle', adminAuth, controller.admin.main.addArticle)
+    router.post('/admin/updateArticle', adminAuth, controller.admin.main.updateArticle)
 }

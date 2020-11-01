@@ -4,7 +4,7 @@ let servicePath = {
     checkLogin: ipUrl + 'checkLogin',
     getTypeInfo: ipUrl + 'getTypeInfo',
     addArticle: ipUrl + 'addArticle',
-
+    updateArticle: ipUrl + 'updateArticle',
 }
 
 export default servicePath
