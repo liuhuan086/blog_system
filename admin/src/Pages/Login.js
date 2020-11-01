@@ -22,6 +22,7 @@ function Login(props) {
             return false
 
         } else if (!password) {
+            message.error("密码不能为空")
             return false
         }
 

@@ -30,6 +30,18 @@ class MainController extends Controller {
         const resType = await this.app.mysql.select('type')
         this.ctx.body = {data: resType}
     }
+
+    async addArticle() {
+        let tmpArticle = this.ctx.request.body
+        // console.log(tmpArticle)
+        const res = await this.app.mysql.insert('article', tmpArticle)
+        const insertSuccess = res.affectedRows === 1
+        const insertId = res.insertId
+        this.ctx.body = {
+            isSuccess: insertSuccess,
+            insertId: insertId
+        }
+    }
 }
 
 module.exports = MainController
