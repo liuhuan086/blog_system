@@ -12,8 +12,8 @@ class MainController extends Controller {
         let userName = this.ctx.request.body.userName
         let password = this.ctx.request.body.password
 
-        const sql = " SELECT userName FROM admin_user WHERE userName = '"+userName +
-            "' AND password = '"+password+"'"
+        const sql = " SELECT userName FROM admin_user WHERE userName = '" + userName +
+            "' AND password = '" + password + "'"
 
         const res = await this.app.mysql.query(sql)
 
@@ -22,8 +22,13 @@ class MainController extends Controller {
             this.ctx.session.openId = {'openId': openId}
             this.ctx.body = {'data': '登陆成功', 'openId': openId}
         } else {
-            this.ctx.body={'data':'登陆失败'}
+            this.ctx.body = {'data': '登陆失败'}
         }
+    }
+
+    async getTypeInfo() {
+        const resType = await this.app.mysql.select('type')
+        this.ctx.body = {data: resType}
     }
 }
 

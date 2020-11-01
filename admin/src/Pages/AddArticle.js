@@ -1,13 +1,15 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import marked from 'marked'
 import '../static/css/AddArticle.css'
 import {Row, Col, Input, Select, Button, DatePicker} from "antd";
+import axios from 'axios'
+import servicePath from "../config/apiUrl";
 
 const {Option} = Select
 const {TextArea} = Input
 
 
-function AddArticle() {
+function AddArticle(props) {
 
     const [articleId, setArticleId] = useState(0)  // 文章的ID，如果是0说明是新增加，如果不是0，说明是修改
     const [articleTitle, setArticleTitle] = useState('')   //文章标题
@@ -20,8 +22,12 @@ function AddArticle() {
     const [typeInfo, setTypeInfo] = useState([]) // 文章类别信息
     const [selectedType, setSelectType] = useState(1) //选择的文章类别
 
+    useEffect(() => {
+        getTypeInfo()
+    }, [])
+
     marked.setOptions({
-        render: marked.Renderer(),
+        renderer: marked.Renderer(),
         gfm: true,
         pedantic: false,
         sanitize: false,
@@ -43,6 +49,24 @@ function AddArticle() {
         setIntroduceHtml(html)
     }
 
+    const getTypeInfo = () => {
+        axios({
+            method: 'get',
+            url: servicePath.getTypeInfo,
+            header: {'Access-Control-Allow-Origin': '*'},
+            withCredentials: true
+        }).then(
+            res => {
+                if (res.data.data == '没有登陆') {
+                    localStorage.removeItem('openId')
+                    props.history.push('/')
+                } else {
+                    setTypeInfo(res.data.data)
+                }
+            }
+        )
+    }
+
     return (
         <div>
             <Row gutter={5}>
@@ -56,10 +80,17 @@ function AddArticle() {
                         </Col>
 
                         <Col span={4}>
-                            <Select defaultValue='1' size='large'>
-                                <Option value='1'>视频教程</Option>
+                            &nbsp;
+                            <Select defaultValue={selectedType} size="large">
+                                {/*{*/}
+                                {/*    typeInfo.map((item,index)=>{*/}
+                                {/*        return (<Option key={index} value={item.id}>{item.typeName}</Option>)*/}
+                                {/*    })*/}
+                                {/*}*/}
+
                             </Select>
                         </Col>
+
                     </Row>
 
                     <br/><br/>
@@ -100,7 +131,7 @@ function AddArticle() {
                             <br/><br/>
                             <div
                                 className='introduce-html'
-                            dangerouslySetInnerHTML={{__html:introduceHtml}}
+                                dangerouslySetInnerHTML={{__html: introduceHtml}}
                             >
 
                             </div>

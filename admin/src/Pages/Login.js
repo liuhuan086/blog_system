@@ -19,17 +19,12 @@ function Login(props) {
 
         if (!userName) {
             message.error("用户名不能为空")
-            setTimeout(() => {
-                setIsLoading(false)
-            }, 1000)
             return false
+
         } else if (!password) {
-            message.error('密码不能为空')
-            setTimeout(() => {
-                setIsLoading(false)
-            }, 1000)
             return false
         }
+
         let dataProps = {
             'userName': userName,
             'password': password
@@ -38,13 +33,14 @@ function Login(props) {
         axios({
             method: 'post',
             url: servicePath.checkLogin,
+            header: {'Access-Control-Allow-Origin': '*'},
             data: dataProps,
             // 前端后端共享session
             withCredentials: true
         }).then(
             res => {
                 setIsLoading(false)
-                if (res.data.data === '登陆成功') {
+                if (res.data.data == '登陆成功') {
                     localStorage.setItem('openId', res.data.openId)
                     props.history.push('/index')
                 } else {
@@ -60,7 +56,7 @@ function Login(props) {
     return (
         <div className='login-div'>
             <Spin tip='Loading...' spinning={isLoading}>
-                <Card title="Huan's Blog System" boardered={true} style={{width: 400}}>
+                <Card title="Huan's Blog System" bordered={true} style={{width: 400}}>
                     <Input
                         id='userName'
                         size='large'
@@ -86,7 +82,7 @@ function Login(props) {
                     />
                     <br/><br/>
 
-                    <Button type="primary" size='large' block onClick={checkLogin}>Login</Button>
+                    <Button type="primary" size={"large"} block onClick={checkLogin}>Login</Button>
 
                 </Card>
             </Spin>
