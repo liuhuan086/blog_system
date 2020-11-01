@@ -8,7 +8,7 @@ function Main() {
         <Router>
             {/*exact 精确匹配路由*/}
             <Route path='/' exact component={Login}/>
-            <Route path='/index/' exact component={AdminIndex}/>
+            <Route path='/index/' component={AdminIndex}/>
         </Router>
     )
 }

@@ -3,11 +3,12 @@ import {Layout, Menu, Breadcrumb, Icon} from 'antd';
 import '../static/css/AdminIndex.css'
 import {Route} from 'react-router-dom'
 import AddArticle from "./AddArticle";
+import ArticleList from "./ArticleList";
 
 const {Header, Content, Footer, Sider} = Layout;
 const {SubMenu} = Menu;
 
-function AdminIndex() {
+function AdminIndex(props) {
     const [collapsed, setCollapsed] = useState(false)
 
 
@@ -15,6 +16,13 @@ function AdminIndex() {
         setCollapsed(collapsed)
     };
 
+    const handleClickArticle = e => {
+        if (e.key === 'addArticle') {
+            props.history.push('/index/add')
+        } else {
+            props.history.push('/index/list')
+        }
+    }
 
     return (
         <Layout style={{minHeight: '100vh'}}>
@@ -31,6 +39,7 @@ function AdminIndex() {
                     </Menu.Item>
                     <SubMenu
                         key="sub1"
+                        onClick={handleClickArticle}
                         title={
                             <span>
                   <Icon type="user"/>
@@ -38,8 +47,8 @@ function AdminIndex() {
                 </span>
                         }
                     >
-                        <Menu.Item key="3">添加文章</Menu.Item>
-                        <Menu.Item key="4">文章列表</Menu.Item>
+                        <Menu.Item key="addArticle">添加文章</Menu.Item>
+                        <Menu.Item key="articleList">文章列表</Menu.Item>
                     </SubMenu>
                     {/*    <SubMenu*/}
                     {/*        key="sub2"*/}
@@ -68,7 +77,8 @@ function AdminIndex() {
                     </Breadcrumb>
                     <div style={{padding: 24, background: '#fff', minHeight: 360}}>
                         <Route path='/index/' exact component={AddArticle}/>
-                        Ryan的博客管理系统
+                        <Route path='/index/add/' exact component={AddArticle}/>
+                        <Route path='/index/list/' exact component={ArticleList}/>
                     </div>
                 </Content>
                 <Footer style={{textAlign: 'center'}}>Huan's Blog ©2020 Created by Ryan</Footer>
