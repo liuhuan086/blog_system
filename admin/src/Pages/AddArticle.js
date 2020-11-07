@@ -19,7 +19,7 @@ function AddArticle(props) {
     const [introduce, setIntroduce] = useState()            //简介的markdown内容
     const [introduceHtml, setIntroduceHtml] = useState('等待编辑') //简介的html内容
     const [showDate, setShowDate] = useState()   //发布日期
-    const [updateDate, setUpdateDate] = useState() //修改日志的日期
+    // const [updateDate, setUpdateDate] = useState() //修改日志的日期
     const [typeInfo, setTypeInfo] = useState([]) // 文章类别信息
     const [selectedType, setSelectType] = useState('请选择类型') //选择的文章类别
     const renderer = new marked.Renderer()
@@ -27,10 +27,10 @@ function AddArticle(props) {
     useEffect(() => {
         getTypeInfo()
         let tmpId = props.match.params.id
-        if(tmpId){
+        if (tmpId) {
             setArticleId(tmpId)
             getArticleById(tmpId)
-        }else {
+        } else {
 
         }
     }, [])
@@ -93,12 +93,13 @@ function AddArticle(props) {
         } else if (!introduce) {
             message.error("文章简介不能为空")
             return false
-        } else if (!showDate) {
-            message.error("发布日期不能为空")
-            return false
+            // } else if (!showDate) {
+            //     message.error("发布日期不能为空")
+            //     return false
         }
-        // message.success("检验通过")
 
+        // message.success("检验通过")
+        let myDate = new Date();
         let dataProps = {}
         // dataProps.type_id = selectedType
         dataProps.type_id = 1
@@ -106,10 +107,10 @@ function AddArticle(props) {
         dataProps.article_content = articleContent
         dataProps.introduce = introduce
 
-        let dateText = showDate.replace('-', '/')
-        dataProps.add_time = (new Date(dateText).getTime()) / 1000
+        // let dateText = showDate.replace('-', '/')
+        dataProps.add_time = myDate.toLocaleString().replaceAll('/','-')
 
-        if (articleId == 0) {
+        if (articleId === 0) {
             dataProps.view_count = 0;
             axios({
                 method: 'post',
@@ -244,16 +245,15 @@ function AddArticle(props) {
                             </div>
                         </Col>
 
-                        <Col span={12}>
-                            <div className="date-select">
-                                <DatePicker
-                                    onChange={(date, dateString) => setShowDate(dateString)}
-                                    placeholder="发布日期"
-                                    size="large"
-
-                                />
-                            </div>
-                        </Col>
+                        {/*<Col span={12}>*/}
+                        {/*    <div className="date-select">*/}
+                        {/*        <DatePicker*/}
+                        {/*            onChange={(date, dateString) => setShowDate(dateString)}*/}
+                        {/*            placeholder="发布日期"*/}
+                        {/*            size="large"*/}
+                        {/*        />*/}
+                        {/*    </div>*/}
+                        {/*</Col>*/}
                     </Row>
                 </Col>
             </Row>
