@@ -108,9 +108,9 @@ function AddArticle(props) {
         dataProps.introduce = introduce
 
         // let dateText = showDate.replace('-', '/')
-        dataProps.add_time = myDate.toLocaleString().replaceAll('/','-')
 
         if (articleId === 0) {
+            dataProps.add_time = myDate.toLocaleString().replaceAll('/','-')
             dataProps.view_count = 0;
             axios({
                 method: 'post',
